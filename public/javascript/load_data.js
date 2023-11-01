@@ -55,39 +55,68 @@ cargarFechaActual()
 let cargarOpenMeteo = () => {
 
   //URL que responde con la respuesta a cargar
-  let URL = ''; 
+  let URL1 = 'https://api.open-meteo.com/v1/forecast?latitude=-2.1962&longitude=-79.8862&hourly=temperature_2m,uv_index&timezone=auto';
 
-  fetch( URL )
+  fetch( URL1 )
     .then(responseText => responseText.json())
     .then(responseJSON => {
         
+		console.log(responseJSON);
 		//Respuesta en formato JSON
 
 		//Referencia al elemento con el identificador plot
-		let plotRef = document.getElementById('plot1');
+		let plotRef1 = document.getElementById('plot1');
 
 		//Etiquetas del gráfico
-		let labels = responseJSON.hourly.time;
+		let labels1 = responseJSON.hourly.time;
 
 		//Etiquetas de los datos
-		let data = responseJSON.hourly.temperature_2m;
+		let data1 = responseJSON.hourly.temperature_2m;
 
 		//Objeto de configuración del gráfico
-		let config = {
+		let config1 = {
 		  type: 'line',
 		  data: {
-			labels: labels, 
+			labels: labels1, 
 			datasets: [
 			  {
 				label: 'Temperature [2m]',
-				data: data, 
+				data: data1, 
 			  }
 			]
 		  }
 		};
 
 		//Objeto con la instanciación del gráfico
-		let chart1  = new Chart(plotRef, config);
+		let chart1  = new Chart(plotRef1, config1);
+		
+		//Grafico 2
+		
+		//Referencia al elemento con el identificador plot
+		let plotRef2 = document.getElementById('plot2');
+
+		//Etiquetas del gráfico
+		let labels2 = responseJSON.hourly.time;
+
+		//Etiquetas de los datos
+		let data2 = responseJSON.hourly.uv_index;
+
+		//Objeto de configuración del gráfico
+		let config2 = {
+		  type: 'line',
+		  data: {
+			labels: labels2, 
+			datasets: [
+			  {
+				  label: 'UV Index',
+				  data: data2, 
+			  }
+			]
+		  }
+		};
+		
+		//Objeto con la instanciación del gráfico
+		let chart2  = new Chart(plotRef2, config2);
 
 	})
     .catch(console.error);
@@ -95,6 +124,4 @@ let cargarOpenMeteo = () => {
 }
 
 
-cargarPrecipitacion()
-cargarFechaActual()
 cargarOpenMeteo()
